@@ -1,5 +1,5 @@
 // src/hooks/useFieldManagement.js
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 
@@ -27,6 +27,21 @@ export const useCreateField = () => {
         onSuccess: () => {
             // After successful creation, redirect back to the dashboard
             navigate('/admin/dashboard');
+        }
+    });
+};
+
+export const useUpdateField = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async ({ id, data }) => {
+            const response = await api.patch(`/api/fields/${id}`, data);
+            return response.data;
+        },
+        onSuccess: () => {
+            // Instantly refresh the field list so the changes appear immediately
+            queryClient.invalidateQueries({ queryKey: ['fields'] });
         }
     });
 };

@@ -79,11 +79,11 @@ const AdminLayout = () => {
             <span className="text-md-body">Dashboard</span>
           </Link>
           <Link
-            to="#"
+            to="/admin/fields"
             className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors"
           >
             <Map className="w-5 h-5" />
-            <span className="text-md-body">Field Map</span>
+            <span>Field Map</span>
           </Link>
           <Link
             to="#"
