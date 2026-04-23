@@ -1,3 +1,4 @@
+// src/components/admin/AddUserModal.jsx
 import React, { useState } from "react";
 import { useAddAgent } from "../../hooks/useUserManagement";
 import {
@@ -9,6 +10,7 @@ import {
   Eye,
   EyeOff,
   Copy,
+  ShieldCheck // Added icon for the role dropdown
 } from "lucide-react";
 
 const AddUserModal = ({ isOpen, onClose }) => {
@@ -16,6 +18,7 @@ const AddUserModal = ({ isOpen, onClose }) => {
     name: "",
     email: "",
     password: "",
+    role: "field_agent", // Added role with default value
   });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +33,8 @@ const AddUserModal = ({ isOpen, onClose }) => {
 
     addAgent(formData, {
       onSuccess: () => {
-        setFormData({ name: "", email: "", password: "" });
+        // Reset role to default on success
+        setFormData({ name: "", email: "", password: "", role: "field_agent" });
         onClose();
       },
       onError: (err) => {
@@ -44,7 +48,7 @@ const AddUserModal = ({ isOpen, onClose }) => {
       <div className="bg-surface w-full max-w-md rounded-xl shadow-2xl overflow-hidden flex flex-col">
         <div className="px-6 py-4 bg-surface-container-lowest border-b border-outline-variant/20 flex justify-between items-center">
           <h2 className="text-xl font-bold text-primary tracking-tight font-headline">
-            Add New Field Agent
+            Add New User
           </h2>
           <button
             onClick={onClose}
@@ -96,6 +100,31 @@ const AddUserModal = ({ isOpen, onClose }) => {
                 className="w-full pl-10 pr-4 py-3 bg-surface-container-highest border-none rounded-lg text-sm font-bold focus:ring-2 focus:ring-primary-fixed"
                 placeholder="david@example.com"
               />
+            </div>
+          </div>
+
+          {/* New Role Selector */}
+          <div>
+            <label className="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">
+              Access Role
+            </label>
+            <div className="relative">
+              <ShieldCheck className="absolute left-3 top-1/2 -translate-y-1/2 text-outline w-5 h-5" />
+              <select
+                required
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
+                className="w-full appearance-none pl-10 pr-4 py-3 bg-surface-container-highest border-none rounded-lg text-sm font-bold focus:ring-2 focus:ring-primary-fixed cursor-pointer text-on-surface"
+              >
+                <option value="field_agent">Field Agent</option>
+                <option value="admin">Administrator</option>
+              </select>
+              {/* Dropdown arrow specifically for the select box */}
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-outline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
             </div>
           </div>
 
