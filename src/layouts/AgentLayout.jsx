@@ -8,7 +8,6 @@ import {
   ClipboardList,
   UserCircle,
   Bell,
-  Sprout,
   CloudSun,
 } from "lucide-react";
 
@@ -38,7 +37,11 @@ const AgentLayout = () => {
       {/* Top App Bar (Mobile & Desktop) */}
       <header className="flex justify-between items-center w-full px-4 py-3 bg-surface-bright/95 backdrop-blur-md text-primary z-10 sticky top-0 border-b border-outline-variant/10 md:hidden">
         <div className="flex items-center gap-2">
-          <Sprout className="w-6 h-6 text-primary" />
+          <img
+            src="/logo_arable.jpg"
+            alt="Arable"
+            className="w-6 h-6 object-contain"
+          />
           <span className="text-md-headline">Smart Season</span>
         </div>
         <div className="flex items-center gap-3">
@@ -55,7 +58,11 @@ const AgentLayout = () => {
       {/* Desktop Side Navigation */}
       <nav className="hidden md:flex flex-col fixed left-0 top-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant/10 p-4 z-20">
         <div className="flex items-center gap-3 mb-8 px-2">
-          <Sprout className="w-8 h-8 text-primary" />
+          <img
+            src="/logo_arable.jpg"
+            alt="Arable"
+            className="w-8 h-8 object-contain"
+          />
           <div>
             <h1 className="text-md-headline text-primary leading-tight">
               Field Agent

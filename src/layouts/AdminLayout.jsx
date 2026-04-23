@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import { Users } from 'lucide-react';
 import {
   LayoutDashboard,
   Map,
-  Leaf,
   BarChart3,
   LifeBuoy,
   UserCircle,
@@ -42,9 +42,11 @@ const AdminLayout = () => {
       >
         <div className="flex items-center justify-between px-2 mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
-              <Leaf className="w-5 h-5" />
-            </div>
+            <img
+              src="/logo_arable.jpg"
+              alt="Arable"
+              className="w-8 h-8 object-contain"
+            />
             <div>
               <h1 className="text-md-headline text-primary leading-tight">
                 Field Ops
@@ -85,13 +87,17 @@ const AdminLayout = () => {
             <Map className="w-5 h-5" />
             <span>Field Map</span>
           </Link>
+
           <Link
-            to="#"
+            to="/admin/users"
             className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors"
           >
-            <Leaf className="w-5 h-5" />
-            <span className="text-md-body">Crop Cycles</span>
+            <Users className="w-5 h-5" />
+            <span className="text-md-body">User Management</span>
           </Link>
+          
+         
+
           <Link
             to="#"
             className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors"

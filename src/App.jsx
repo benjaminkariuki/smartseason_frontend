@@ -13,6 +13,7 @@ import api from "./api/axios";
 import { useAuthStore } from "./store/authStore";
 import FieldList from './pages/admin/FieldList';
 import AgentTasks from "./pages/agent/AgentTasks"; 
+import UserManagement from './pages/admin/UserManagement';
 
 // A simple Route Guard component
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -68,7 +69,8 @@ function App() {
       >
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="fields/new" element={<AddField />} />
-        <Route path="fields" element={<FieldList />} /> {/* Add this line */}
+        <Route path="fields" element={<FieldList />} /> 
+        <Route path="users" element={<UserManagement />} /> 
       </Route>
 
       {/* Agent Routes wrapped in Layout and Guard */}

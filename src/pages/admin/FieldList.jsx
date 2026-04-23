@@ -6,7 +6,8 @@ import { useActiveAgents } from "../../hooks/useFieldManagement";
 import EditFieldModal from "../../components/fields/EditFieldModal";
 import DeleteConfirmationModal from "../../components/fields/DeleteConfirmationModal";
 
-import { Leaf, Download, Trash2, Edit3, Eye, Loader2 } from "lucide-react";
+// 1. Added ChevronDown to the imports
+import { Leaf, Download, Trash2, Edit3, Eye, Loader2, ChevronDown } from "lucide-react";
 
 const FieldList = () => {
   // Filter State
@@ -80,60 +81,60 @@ const FieldList = () => {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-surface-container-low rounded-xl p-3 flex flex-wrap gap-3 items-center">
-        <span className="text-md-label font-bold text-on-surface-variant uppercase px-2">
-          Stage
-        </span>
-        {[
-          "All Stages",
-          "Preparation",
-          "Planted",
-          "Growing",
-          "Ready",
-          "Harvested",
-        ].map((stage) => (
-          <button
-            key={stage}
-            onClick={() => handleFilterChange("stage", stage)}
-            className={`px-4 py-2 rounded-lg text-md-body font-semibold transition-colors ${filters.stage === stage ? "bg-surface-container-lowest text-primary shadow-sm" : "text-on-surface-variant hover:bg-surface-container-high"}`}
-          >
-            {stage}
-          </button>
-        ))}
+      {/* 2. Updated Filters Section */}
+      <div className="bg-surface-container-low p-4 rounded-xl flex flex-col md:flex-row gap-4 items-center justify-between border-outline-variant border-opacity-20 border">
+        <div className="flex flex-wrap gap-3 w-full">
+          
+          {/* Stage Dropdown */}
+          <div className="relative w-full sm:w-auto min-w-[160px]">
+            <select
+              value={filters.stage}
+              onChange={(e) => handleFilterChange("stage", e.target.value)}
+              className="w-full appearance-none bg-surface-container-highest text-on-surface text-sm font-bold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-fixed border-none cursor-pointer"
+            >
+              <option value="All Stages">Stage: All</option>
+              <option value="Preparation">Preparation</option>
+              <option value="Planted">Planted</option>
+              <option value="Growing">Growing</option>
+              <option value="Ready">Ready</option>
+              <option value="Harvested">Harvested</option>
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant w-4 h-4" />
+          </div>
 
-        <div className="w-px h-6 bg-outline-variant/30 mx-2 hidden md:block"></div>
+          {/* Status Dropdown */}
+          <div className="relative w-full sm:w-auto min-w-[160px]">
+            <select
+              value={filters.status}
+              onChange={(e) => handleFilterChange("status", e.target.value)}
+              className="w-full appearance-none bg-surface-container-highest text-on-surface text-sm font-bold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-fixed border-none cursor-pointer"
+            >
+              <option value="All Statuses">Status: All</option>
+              <option value="Active">Active</option>
+              <option value="At Risk">At Risk</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant w-4 h-4" />
+          </div>
 
-        <span className="text-md-label font-bold text-on-surface-variant uppercase px-2">
-          Status
-        </span>
-        {["All Statuses", "Active", "At Risk", "Completed"].map((status) => (
-          <button
-            key={status}
-            onClick={() => handleFilterChange("status", status)}
-            className={`px-4 py-2 rounded-lg text-md-body font-semibold transition-colors ${filters.status === status ? "bg-surface-container-lowest text-primary shadow-sm" : "text-on-surface-variant hover:bg-surface-container-high"}`}
-          >
-            {status}
-          </button>
-        ))}
-
-        <div className="w-px h-6 bg-outline-variant/30 mx-2 hidden md:block"></div>
-
-        <span className="text-md-label font-bold text-on-surface-variant uppercase px-2">
-          Assignee
-        </span>
-        <select
-          value={filters.agent_id}
-          onChange={(e) => handleFilterChange("agent_id", e.target.value)}
-          className="bg-surface-container-lowest text-primary rounded-lg text-md-body font-semibold shadow-sm border-none focus:ring-2 focus:ring-primary-fixed py-2 pl-4 pr-8 cursor-pointer"
-        >
-          <option value="All Assignees">All Assignees</option>
-          {agents?.map((agent) => (
-            <option key={agent.id} value={agent.id}>
-              {agent.name}
-            </option>
-          ))}
-        </select>
+          {/* Assignee Dropdown */}
+          <div className="relative w-full sm:w-auto min-w-[160px]">
+            <select
+              value={filters.agent_id}
+              onChange={(e) => handleFilterChange("agent_id", e.target.value)}
+              className="w-full appearance-none bg-surface-container-highest text-on-surface text-sm font-bold py-2.5 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-fixed border-none cursor-pointer"
+            >
+              <option value="All Assignees">Assignee: All</option>
+              {agents?.map((agent) => (
+                <option key={agent.id} value={agent.id}>
+                  {agent.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant w-4 h-4" />
+          </div>
+          
+        </div>
       </div>
 
       {/* Main Data List */}

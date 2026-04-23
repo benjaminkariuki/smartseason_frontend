@@ -154,53 +154,68 @@ const FieldDetailsModal = ({ field, isOpen, onClose }) => {
                 </p>
               </div>
               <div className="flex gap-2">
-                <button className="px-4 py-2 bg-surface-container-highest text-on-surface font-semibold rounded-lg text-sm hover:bg-surface-container-high transition-colors">
+                <button className="px-4 py-2 bg-surface-container-highest text-on-surface font-semibold rounded-lg text-sm hover:bg-surface-container-high transition-colors shadow-sm">
                   Export PDF
                 </button>
               </div>
             </div>
 
-            {/* History List */}
-            <div className="space-y-4">
+            {/* Timeline View */}
+            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant/30 before:to-transparent">
               {!field.histories || field.histories.length === 0 ? (
                 <div className="p-8 text-center bg-surface-container-lowest rounded-xl border border-outline-variant/10 text-on-surface-variant font-medium">
                   No history logs recorded for this field yet.
                 </div>
               ) : (
-                field.histories.map((log) => (
-                  <div
-                    key={log.id}
-                    className="bg-surface-container-lowest rounded-xl p-5 flex flex-wrap items-center gap-6 shadow-sm border-l-4 border-primary"
-                  >
-                    {/* Actor Info */}
-                    <div className="flex items-center gap-4 min-w-[200px]">
-                      <div className="w-10 h-10 rounded-full border-2 border-primary-fixed bg-surface-container-high flex items-center justify-center text-primary font-bold">
+                field.histories.map((log) => {
+                  const isNote = log.field_changed === "notes";
+                  
+                  return (
+                    <div
+                      key={log.id}
+                      className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
+                    >
+                      {/* Timeline Node Point */}
+                      <div
+                        className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-surface-container-low shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10 ${
+                          isNote 
+                            ? "bg-secondary-container text-on-secondary-container" 
+                            : "bg-primary-container text-on-primary-container"
+                        }`}
+                      >
                         {log.user?.name?.charAt(0) || "S"}
                       </div>
-                      <div>
-                        <p className="text-md-body font-medium text-on-surface">
-                          {log.user?.name || "System Auto"}
-                        </p>
-                        <p className="text-md-label text-outline capitalize">
-                          {log.user?.role?.replace("_", " ") || "Process"}
-                        </p>
+
+                      {/* Content Card */}
+                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-xl border border-outline-variant/20 shadow-sm bg-surface-container-lowest transition-shadow hover:shadow-md flex flex-col gap-3">
+                        <div className="flex items-start justify-between border-b border-outline-variant/10 pb-3">
+                          <div>
+                            <p className="text-md-body font-bold text-on-surface leading-tight">
+                              {log.user?.name || "System Auto"}
+                            </p>
+                            <p className="text-[10px] font-bold text-outline uppercase tracking-wider mt-0.5">
+                              {log.user?.role?.replace("_", " ") || "Process"}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-outline font-semibold text-xs whitespace-nowrap bg-surface-container px-2 py-1 rounded-md">
+                            <Clock className="w-3.5 h-3.5" />
+                            {timeAgo(log.created_at)}
+                          </div>
+                        </div>
+
+                        <div>
+                          <p
+                            className={`text-md-body font-medium ${
+                              isNote ? "text-secondary italic" : "text-on-surface-variant"
+                            }`}
+                          >
+                            {formatLogMessage(log)}
+                          </p>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Action Details (Using the Helper Function) */}
-                    <div className="flex-1 min-w-[300px]">
-                      <p className="text-md-body text-on-surface-variant font-medium">
-                        {formatLogMessage(log)}
-                      </p>
-                    </div>
-
-                    {/* Timestamp */}
-                    <div className="flex items-center gap-2 text-outline font-semibold">
-                      <Clock className="w-4 h-4" />
-                      {timeAgo(log.created_at)}
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </section>

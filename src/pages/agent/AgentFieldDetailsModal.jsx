@@ -95,7 +95,7 @@ const AgentFieldDetailsModal = ({ field, isOpen, onClose }) => {
             </div>
             <div className="p-4 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10">
               <span className="text-md-label font-bold text-outline uppercase mb-1 block">
-                Health Status
+                Status
               </span>
               <div
                 className={`text-md-body font-bold ${field.status === "At Risk" ? "text-error flex items-center gap-1" : "text-on-surface"}`}
