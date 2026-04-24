@@ -40,3 +40,5 @@ git clone https://github.com/benjaminkariuki/smartseason_frontend.git
 # Install dependencies
 npm install
 npm run dev
+
+DEPLOYMENT LINK:  https://smartseason-mauve.vercel.app/
