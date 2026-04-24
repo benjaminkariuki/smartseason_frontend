@@ -22,19 +22,17 @@ export const useLogin = () => {
     setError(null);
   };
 
-  const loginMutation = useMutation({
+ const loginMutation = useMutation({
     mutationFn: async (data) => {
-      // 1. Get the CSRF Cookie
-      await api.get("/sanctum/csrf-cookie");
-
-      // 2. Post login credentials
+      // 1. NO MORE CSRF HANDSHAKE! Just post the credentials directly.
       const response = await api.post("/api/login", data);
-
-      // 3. Return the payload exactly as Laravel sends it
       return response.data;
     },
     onSuccess: (data) => {
-      // 'data.user' contains the email and role from your controller
+      // 2. Save the token securely in the browser
+      localStorage.setItem('auth_token', data.token);
+      
+      // 3. Set the user in your Zustand store
       setUser(data.user);
 
       // Route them based on their role

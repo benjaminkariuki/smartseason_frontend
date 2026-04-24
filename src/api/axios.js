@@ -7,8 +7,16 @@ const api = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json",
   },
-  withCredentials: true,
-  // remove withXSRFToken - this option didn't exist in 1.3.3
+  // CRITICAL: Remove withCredentials completely when using Bearer tokens
+});
+
+// Interceptor: Automatically attach the Bearer token to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('auth_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export default api;

@@ -15,6 +15,8 @@ export const useAuthStore = create((set) => ({
     clearAuth: () => set({ 
         user: null, 
         isAuthenticated: false, 
-        isCheckingAuth: false 
+        isCheckingAuth: false,
+     localStorage.removeItem('auth_token');
+
     }),
 }));
