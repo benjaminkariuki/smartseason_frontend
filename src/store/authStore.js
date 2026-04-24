@@ -12,11 +12,15 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: !!user, 
         isCheckingAuth: false 
     }),
-    clearAuth: () => set({ 
-        user: null, 
-        isAuthenticated: false, 
-        isCheckingAuth: false,
-     localStorage.removeItem('auth_token');
-
-    }),
+    clearAuth: () => {
+        // 1. Clear the token from storage first
+        localStorage.removeItem('auth_token');
+        
+        // 2. Then update the Zustand state
+        set({ 
+            user: null, 
+            isAuthenticated: false, 
+            isCheckingAuth: false 
+        });
+    },
 }));
